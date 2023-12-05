@@ -1,0 +1,11 @@
+/* Chat.css */
+  
+.user {
+  background-color: #12dbff;
+  align-self: flex-end !important;
+}
+
+.assistant {
+  background-color: #4444ff; /* Light gray background for bot messages */
+  align-self: flex-start;
+}
