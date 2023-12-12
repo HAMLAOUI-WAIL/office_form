@@ -6,6 +6,7 @@ import {
   Typography,
   Link,
   Alert,
+  Paper
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
@@ -71,82 +72,100 @@ const SignupView = () => {
 
     return errors;
   };
-  const texts = {
-    color: "white",
+  const signUpLinkStyle = {
+    marginTop: "10px",
+    color: "#2196f3",
+    textDecoration: "none",
+    fontWeight: "bold",
   };
-  const texts2 = {
-    color: "white",
-    backgroundColor: "#ffffff",
-  };
-
   return (
-    <Container maxWidth={"xs"} sx={{ mt: { xs: 2, md: 6 } }}>
-      <Stack alignItems="center">
-        <Typography variant="h2" color="white" sx={{ mb: 6 }}>
-          <Link to="/" color="inherit" underline="none">
-            <img src={logo} />
-          </Link>
-        </Typography>
-        <Typography variant="h5" gutterBottom color="white">
-          Sign Up
-        </Typography>
-        <Typography color="white">
-          Already have an account?{" "}
-          <Link to="/login" style={texts}>
-            Login
-          </Link>
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            style={texts2}
-            label="Username"
-            fullWidth
-            margin="normal"
-            autoFocus
-            required
-            id="username"
-            name="username"
-            onChange={handleChange}
-            error={errors.username !== undefined}
-            helperText={errors.username}
-          />
-          <TextField
-            style={texts2}
-            label="Email Address"
-            fullWidth
-            margin="normal"
-            autoComplete="email"
-            required
-            id="email"
-            name="email"
-            onChange={handleChange}
-            error={errors.email !== undefined}
-            helperText={errors.email}
-          />
-          <TextField
-            style={texts2}
-            label="Password"
-            fullWidth
-            required
-            margin="normal"
-            autoComplete="password"
-            id="password"
-            name="password"
-            type="password"
-            onChange={handleChange}
-            error={errors.password !== undefined}
-            helperText={errors.password}
-          />
-          <ErrorAlert error={serverError} />
-          <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
-            Sign Up
-          </Button>
-        </Box>
-        <Box sx={{ mt: 3 }}>
-          <Copyright />
-        </Box>
-      </Stack>
-    </Container>
+    <Container
+  maxWidth={"xs"}
+  sx={{ mt: 6 }}
+>
+  <Stack alignItems="center">
+    <Link to="/" color="inherit" underline="none">
+      <img src={logo} alt="Logo" style={{ marginBottom: "20px" }} />
+    </Link>
+    
+    <Box
+      component={Paper}
+      elevation={3}
+      sx={{
+        mt: 6,
+        backgroundColor: "#ffffff",
+        color: "#2196f3",
+        borderRadius: "10px",
+        boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)",
+        padding: "20px",
+        maxWidth: "400px",
+        margin: "auto",
+      }}
+    >
+      <Typography variant="h5" gutterBottom color="#2196f3">
+        Sign Up
+      </Typography>
+      <Typography color="#333333" mb={2}>
+        Already have an account?{" "}
+        <Link to="/login" style={signUpLinkStyle}>
+              Login
+         </Link>
+      </Typography>
+      <TextField
+        label="Username"
+        fullWidth
+        margin="normal"
+        autoFocus
+        required
+        id="username"
+        name="username"
+        onChange={handleChange}
+        error={errors.username !== undefined}
+        helperText={errors.username}
+      />
+      <TextField
+        label="Email Address"
+        fullWidth
+        margin="normal"
+        autoComplete="email"
+        required
+        id="email"
+        name="email"
+        onChange={handleChange}
+        error={errors.email !== undefined}
+        helperText={errors.email}
+      />
+      <TextField
+        label="Password"
+        fullWidth
+        required
+        margin="normal"
+        autoComplete="new-password"
+        id="password"
+        name="password"
+        type="password"
+        onChange={handleChange}
+        error={errors.password !== undefined}
+        helperText={errors.password}
+      />
+      <ErrorAlert error={serverError} />
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 2, backgroundColor: "#2196f3", color: "#ffffff" }}
+        onClick={handleSubmit}
+      >
+        Sign Up
+      </Button>
+    </Box>
+
+    <Box sx={{ mt: 3 }}>
+      <Copyright />
+    </Box>
+  </Stack>
+</Container>
+
   );
 };
 

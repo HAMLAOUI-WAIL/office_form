@@ -1,19 +1,16 @@
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  Alert,
+  Box,
   Button,
-  Checkbox,
   Container,
-  FormControlLabel,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../api/users";
-import ErrorAlert from "../ErrorAlert";
 import { loginUser } from "../../helpers/authHelper";
+import ErrorAlert from "../ErrorAlert";
 import Copyright from "../Copyright";
 import logo from "../logo.png";
 
@@ -42,60 +39,84 @@ const LoginView = () => {
       navigate("/");
     }
   };
-  const texts = {
-    color: "white",
+
+  const formContainerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "20px",
+    borderRadius: "8px",
+    backgroundColor: "#f5f5f5",
   };
-  const texts2 = {
-    color: "white",
-    backgroundColor: "#ffffff",
+
+  const textFieldStyle = {
+    margin: "10px 0",
+    width: "100%",
+  };
+
+  const buttonStyle = {
+    margin: "20px 0",
+    padding: "10px",
+    backgroundColor: "#2196f3",
+    color: "#fff",
+    borderRadius: "4px",
+    fontWeight: "bold",
+  };
+
+  const signUpLinkStyle = {
+    marginTop: "10px",
+    color: "#2196f3",
+    textDecoration: "none",
+    fontWeight: "bold",
   };
 
   return (
-    <Container maxWidth={"xs"} sx={{ mt: 6 }}>
+    <Container maxWidth="xs" sx={{ mt: 6 }}>
       <Stack alignItems="center">
-        <Typography variant="h2" color="text.secondary" sx={{ mb: 6 }}>
+        <Typography variant="h2" color="primary" sx={{ mb: 6 }}>
           <Link to="/" color="inherit" underline="none">
-            <img src={logo} />
+            <img src={logo} alt="Logo" />
           </Link>
         </Typography>
-        <Typography variant="h5" gutterBottom color={"white"}>
-          Login
-        </Typography>
-        <Typography color="white">
-          Don't have an account yet?{" "}
-          <Link to="/signup" style={texts}>
-            Sign Up
-          </Link>
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            style={texts2}
-            label="Email Address"
-            fullWidth
-            margin="normal"
-            autoComplete="email"
-            autoFocus
-            required
-            id="email"
-            name="email"
-            onChange={handleChange}
-          />
-          <TextField
-            style={texts2}
-            label="Password"
-            fullWidth
-            required
-            margin="normal"
-            id="password  "
-            name="password"
-            onChange={handleChange}
-            type="password"
-          />
-
-          <ErrorAlert error={serverError} />
-          <Button type="submit" fullWidth variant="contained" sx={{ my: 2 }}>
+        <Box style={formContainerStyle}>
+          <Typography variant="h5" gutterBottom color="primary">
             Login
-          </Button>
+          </Typography>
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <TextField
+              style={textFieldStyle}
+              label="Email Address"
+              fullWidth
+              margin="normal"
+              autoComplete="email"
+              autoFocus
+              required
+              id="email"
+              name="email"
+              onChange={handleChange}
+            />
+            <TextField
+              style={textFieldStyle}
+              label="Password"
+              fullWidth
+              required
+              margin="normal"
+              id="password"
+              name="password"
+              onChange={handleChange}
+              type="password"
+            />
+            <ErrorAlert error={serverError} />
+            <Button type="submit" fullWidth variant="contained" style={buttonStyle}>
+              Login
+            </Button>
+          </form>
+          <Typography style={signUpLinkStyle}>
+            Don't have an account yet?{" "}
+            <Link to="/signup" style={signUpLinkStyle}>
+              Sign Up
+            </Link>
+          </Typography>
         </Box>
         <Box sx={{ mt: 3 }}>
           <Copyright />

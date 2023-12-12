@@ -105,35 +105,26 @@ const Comments = () => {
     boxShadow: "5px 5px 10px #888888",
     color: "white",
   };
-  return comments ? (
+  return (
     <Stack spacing={2}>
-      <CommentEditor
-        addComment={addComment}
-        label="What are your thoughts on this post?"
-      />
+      <CommentEditor addComment={addComment} label="What are your thoughts on this post?" />
 
-      {comments.length > 0 ? (
-        <Box pb={4}>
-          {comments.map((comment, i) => (
-            <Comment
-              addComment={addComment}
-              removeComment={removeComment}
-              editComment={editComment}
-              comment={comment}
-              key={comment._id}
-              depth={0}
-            />
-          ))}
-          {loading && <Loading />}
-        </Box>
-      ) : (
-        <Box
-          display="flex"
-          justifyContent="center"
-          textAlign="center"
-          paddingY={3}
-        >
+      {comments ? (
+        comments.length > 0 ? (
           <Box>
+            {comments.map((comment, i) => (
+              <Comment
+                addComment={addComment}
+                removeComment={removeComment}
+                editComment={editComment}
+                comment={comment}
+                key={comment._id}
+                depth={0}
+              />
+            ))}
+          </Box>
+        ) : (
+          <Box textAlign="center" py={3}>
             <Typography variant="h5" color="text.secondary" gutterBottom>
               No comments yet...
             </Typography>
@@ -141,12 +132,13 @@ const Comments = () => {
               Be the first one to comment!
             </Typography>
           </Box>
-        </Box>
+        )
+      ) : (
+        <Loading label="Loading comments" />
       )}
     </Stack>
-  ) : (
-    <Loading label="Loading comments" />
-  );
+  ) 
+    
 };
 
 export default Comments;

@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Avatar,
   IconButton,
@@ -5,24 +6,19 @@ import {
   TextField,
   Typography,
   Button,
-  InputAdornment,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useState } from "react";
-import "react-icons/ai";
-import "react-icons/ri";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  AiFillFileText,
+  AiOutlineSearch,
   AiFillHome,
   AiFillMessage,
-  AiOutlineSearch,
 } from "react-icons/ai";
+import { RiContrast2Line } from "react-icons/ri";
 import logo from "./logo.png";
-import { Link, useNavigate } from "react-router-dom";
-import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 import UserAvatar from "./UserAvatar";
 import HorizontalStack from "./util/HorizontalStack";
-import { RiContrast2Line } from "react-icons/ri";
+import { isLoggedIn, logoutUser } from "../helpers/authHelper";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -31,13 +27,9 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const [searchIcon, setSearchIcon] = useState(false);
   const [width, setWindowWidth] = useState(0);
-  const componentStyle = {
-    backgroundColor: "#2D033B",
-  };
 
   useEffect(() => {
     updateDimensions();
-
     window.addEventListener("resize", updateDimensions);
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
@@ -50,7 +42,7 @@ const Navbar = () => {
     setWindowWidth(width);
   };
 
-  const handleLogout = async (e) => {
+  const handleLogout = async () => {
     logoutUser();
     navigate("/login");
   };
@@ -64,16 +56,19 @@ const Navbar = () => {
     navigate("/search?" + new URLSearchParams({ search }));
   };
 
-  const handleSearchIcon = (e) => {
+  const handleSearchIcon = () => {
     setSearchIcon(!searchIcon);
   };
+
   const ItemStyle = {
     backgroundColor: "#262525",
     borderRadius: "10px",
     borderBottom: "1px solid #000000",
     border: "1px solid #ccc",
     boxShadow: "5px 5px 10px #888888",
+    padding: "10px",
   };
+
   const searchStyle = {
     backgroundColor: "#ffffff",
     borderRadius: "10px",
@@ -81,7 +76,11 @@ const Navbar = () => {
   };
 
   return (
-    <Stack mb={2} mt={2} style={ItemStyle}>
+    <Stack
+      mb={2}
+      mt={2}
+      sx={ItemStyle}
+    >
       <Stack
         direction="row"
         alignItems="center"
@@ -95,11 +94,12 @@ const Navbar = () => {
         <HorizontalStack>
           <img
             src={logo}
-            size={33}
-            onClick={() => navigate("/")}
+            alt="Logo"
             width="200"
             height="40"
-          ></img>
+            sx={{ cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          />
         </HorizontalStack>
         {!navbarWidth && (
           <Box component="form" onSubmit={handleSubmit}>
@@ -121,15 +121,15 @@ const Navbar = () => {
             </IconButton>
           )}
 
-          <IconButton component={Link} to={"/"}>
-            <AiFillHome color={"white"} />
+          <IconButton component={Link} to={"/"} sx={{ color: "white" }}>
+            <AiFillHome />
           </IconButton>
           {user ? (
             <>
-              <IconButton component={Link} to={"/messenger"}>
-                <AiFillMessage color={"white"} />
+              <IconButton component={Link} to={"/messenger"} sx={{ color: "white" }}>
+                <AiFillMessage />
               </IconButton>
-              <IconButton component={Link} to={"/users/" + username}>
+              <IconButton component={Link} to={"/users/" + username} sx={{ color: "white" }}>
                 <UserAvatar width={30} height={30} username={user.username} />
               </IconButton>
               <Button onClick={handleLogout} style={searchStyle}>
@@ -138,20 +138,10 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <Button
-                variant="text"
-                sx={{ minWidth: 80 }}
-                href="/signup"
-                style={searchStyle}
-              >
+              <Button variant="text" sx={{ minWidth: 80 }} href="/signup" style={searchStyle}>
                 Sign Up
               </Button>
-              <Button
-                variant="text"
-                sx={{ minWidth: 60 }}
-                href="/login"
-                style={searchStyle}
-              >
+              <Button variant="text" sx={{ minWidth: 60 }} href="/login" style={searchStyle}>
                 Login
               </Button>
             </>

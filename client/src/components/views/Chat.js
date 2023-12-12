@@ -17,22 +17,22 @@ import {TextField} from '@mui/material';
 //     border: 'none', // Remove the border
 //     overflow: 'hidden', // Hide any overflow content
 //   },
-//   bubbleContainer: {
-//     display: 'flex',
-//     flexDirection: 'column',
-//     overflowY: 'scroll',
-//     flex: 1,
-//     padding: '10px',
-//     scrollbarWidth: 'none', // Hide the scrollbar for Firefox
-//     '-ms-overflow-style': 'none', // Hide the scrollbar for IE and Edge
-//     '&::-webkit-scrollbar': {
-//       width: '0rem',
-//       background: '#f1f1f1',
-//     },
-//     '&::-webkit-scrollbar-thumb': {
-//       background: '#888',
-//     },
-//   },
+  // bubbleContainer: {
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   overflowY: 'scroll',
+  //   flex: 1,
+  //   padding: '10px',
+  //   scrollbarWidth: 'none', // Hide the scrollbar for Firefox
+  //   '-ms-overflow-style': 'none', // Hide the scrollbar for IE and Edge
+  //   '&::-webkit-scrollbar': {
+  //     width: '0rem',
+  //     background: '#f1f1f1',
+  //   },
+  //   '&::-webkit-scrollbar-thumb': {
+  //     background: '#888',
+  //   },
+  // },
 //   bubble: {
 //     maxWidth: "70%",
 //     padding: '10px',
@@ -110,60 +110,85 @@ const Chat = () => {
       scrollToBottom();
     }
   };
+  const containerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+  };
+
+  const messageContainerStyle = {
+    flex: 1,
+    overflowY: "scroll",
+    padding: "8px",
+    scrollbarWidth: "thin",
+    scrollbarColor: "#ccc transparent",
+  };
+
+  const messageStyle = {
+    maxWidth: "70%",
+    padding: "8px",
+    margin: "4px",
+    borderRadius: "8px",
+    wordBreak: "break-word",
+    fontSize: "16px",
+  };
+
+  const inputContainerStyle = {
+    display: "flex",
+    alignItems: "center",
+    padding: "8px",
+  };
+
+  const textareaStyle = {
+    flex: 1,
+    resize: "none",
+    border: "1px solid #ccc",
+    borderRadius: "4px",
+    padding: "8px",
+    marginRight: "8px",
+  };
+
+  const buttonStyle = {
+    backgroundColor: "#2196f3",
+    color: "#fff",
+    padding: "8px 16px",
+    borderRadius: "4px",
+    cursor: "pointer",
+  };
 
   return (
-    // <div className={classes.container}>
-    <div >
-      {/* <div className={classes.bubbleContainer} ref={bubbleContainerRef}> */}
-      <div ref={bubbleContainerRef}>
+    <div style={containerStyle}>
+      <div style={messageContainerStyle}>
         {messages.map((message, index) => (
-          // <div key={index} className={`${message.role} ${classes.bubble}`}>
-          <div key={index} className={`${message.role}`}>
+          <div
+            key={index}
+            style={{
+              ...messageStyle,
+              backgroundColor: message.role === "sender" ? "#2196f3" : "#fff",
+              color: message.role === "sender" ? "#fff" : "#000",
+            }}
+          >
             {message.content}
           </div>
         ))}
       </div>
-      {/* <div className={classes.inputContainer}> */}
-      {/* <div>
-        <TextField
-          id="outlined-basic"
-          label="Type your message"
-          variant="outlined"
-          type="text"
+      <div style={inputContainerStyle}>
+        <textarea
+          id="message-input"
+          placeholder="Type your message..."
+          rows="3"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="input-field"
-          placeholder="Type your message..."
-        />
-        <LoadingButton
-          loading={load}
-          loadingPosition="start"
-          startIcon={<SendIcon />}
-          variant="outlined"
+          style={textareaStyle}
+        ></textarea>
+        <button
           onClick={sendMessage}
-          className="send-button"
+          style={buttonStyle}
+          disabled={load}
         >
           Send
-        </LoadingButton>
-      </div> */}
-      <div>
-  <textarea
-    id="message-input"
-    placeholder="Type your message..."
-    rows="3"
-    value={input}
-    onChange={(e) => setInput(e.target.value)}
-    className="message-input"
-  ></textarea>
-  <button
-    onClick={sendMessage}
-    className="send-button"
-    disabled={load}
-  >
-    {/* <SendIcon /> */}
-    Send
-  </button>
-</div>
+        </button>
+      </div>
     </div>
   );
 };
