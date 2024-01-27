@@ -33,7 +33,8 @@ io.on("connection", (socket) => socketServer(socket));
 
 const PORT = process.env.PORT || 4000;
 mongoose
-  .connect(process.env.MONGO_URI, {
+  // .connect(process.env.MONGO_URI, {
+  .connect("mongodb+srv://whamlaoui:wail1234567890@cluster0.dkwnwgx.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
