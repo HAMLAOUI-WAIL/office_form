@@ -22,10 +22,9 @@ const app = express();
 const httpServer = http.createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:3000"],
+    origin: "*",
   },
 });
-
 mongoose.set('strictQuery', true);
 
 io.use(authSocket);
@@ -33,8 +32,7 @@ io.on("connection", (socket) => socketServer(socket));
 
 const PORT = process.env.PORT || 4000;
 mongoose
-  // .connect(process.env.MONGO_URI, {
-  .connect("mongodb+srv://whamlaoui:wail1234567890@cluster0.dkwnwgx.mongodb.net/?retryWrites=true&w=majority", {
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
